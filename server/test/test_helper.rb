@@ -12,6 +12,10 @@ require "rails/test_help"
 require_relative "support/test_data"
 require_relative "support/graphql_helpers"
 
+# `bin/rails db:prepare` seeds a database it has just created, so a fresh test
+# database starts with the demo workspaces. Tests expect to own every row.
+[DiagramOperation, DiagramVersion, Diagram, Membership, Member, Workspace].each(&:delete_all)
+
 module ActiveSupport
   class TestCase
     include TestData
