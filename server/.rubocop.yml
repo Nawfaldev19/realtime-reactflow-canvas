@@ -1,0 +1,52 @@
+plugins:
+  - rubocop-rails
+  - rubocop-minitest
+
+AllCops:
+  TargetRubyVersion: 3.3
+  NewCops: enable
+  SuggestExtensions: false
+  Exclude:
+    - "bin/*"
+    - "db/schema.rb"
+    - "vendor/**/*"
+    - "tmp/**/*"
+
+Style/Documentation:
+  Enabled: false
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Layout/LineLength:
+  Max: 140
+Metrics/AbcSize:
+  Max: 25
+Metrics/ClassLength:
+  Exclude:
+    - "test/**/*"
+Metrics/BlockLength:
+  Exclude:
+    - "test/**/*"
+    - "db/seeds.rb"
+    - "config/**/*"
+Minitest/MultipleAssertions:
+  Max: 6
+Rails/SkipsModelValidations:
+  Exclude:
+    - "test/**/*"
+Naming/MethodParameterName:
+  AllowedNames: [x, y, id, as]
+# GraphQL resolver methods are named after their fields (canEdit, not canEdit?).
+Naming/PredicateMethod:
+  Exclude:
+    - "app/graphql/**/*"
+Rails/Output:
+  Exclude:
+    - "db/seeds.rb"
+Metrics/ParameterLists:
+  CountKeywordArgs: false
+Metrics/MethodLength:
+  Max: 15
+  Exclude:
+    - "db/migrate/*"

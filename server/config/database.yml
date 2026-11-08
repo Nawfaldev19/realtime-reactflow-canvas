@@ -1,0 +1,17 @@
+# SQLite in every environment (see docs/DECISIONS.md, ADR-003).
+default: &default
+  adapter: sqlite3
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
+  timeout: 5000
+
+development:
+  <<: *default
+  database: <%= ENV.fetch("DATABASE_PATH", "storage/development.sqlite3") %>
+
+test:
+  <<: *default
+  database: storage/test.sqlite3
+
+production:
+  <<: *default
+  database: <%= ENV.fetch("DATABASE_PATH", "storage/production.sqlite3") %>

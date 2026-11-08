@@ -1,0 +1,11 @@
+# One process serves the demo, so the in-process adapter is enough everywhere.
+# Several server processes would need a shared adapter (a pub/sub server or a
+# database-backed one) so a broadcast reaches subscribers in every process.
+development:
+  adapter: async
+
+test:
+  adapter: test
+
+production:
+  adapter: async
