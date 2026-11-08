@@ -1,0 +1,11 @@
+# Generated code, build output and reports
+src/graphql/generated
+dist
+dist-e2e
+dist-bench
+coverage
+test-results
+playwright-report
+.pw-browsers
+package-lock.json
+*.md
