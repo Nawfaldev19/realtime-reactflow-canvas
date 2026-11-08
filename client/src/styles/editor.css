@@ -1,0 +1,1874 @@
+/* Editor layout, node bodies and the properties panel. */
+.shell--editor {
+  height: 100vh;
+  overflow: hidden;
+}
+.main--editor {
+  max-width: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.editor-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+.editor-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-left: auto;
+}
+.diagram-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+.diagram-title h1 {
+  font-size: var(--text-xl);
+  margin: 0;
+}
+.diagram-title .field-error {
+  flex-basis: 100%;
+}
+
+.save-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+.save-status--failed,
+.save-status--conflict {
+  color: var(--color-danger);
+}
+.save-status--retrying {
+  color: var(--color-warning);
+}
+.spin {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spin {
+    animation: none;
+  }
+}
+
+.banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-sunken);
+}
+.banner p {
+  margin: 0;
+  flex: 1;
+  min-width: 14rem;
+}
+.banner-info svg {
+  color: var(--color-accent);
+}
+.banner-error {
+  color: var(--color-danger);
+}
+.banner-error p {
+  color: var(--color-text);
+}
+
+.editor-body {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+.editor-canvas {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+}
+.editor-canvas .react-flow {
+  --xy-background-color: var(--color-bg);
+  --xy-background-pattern-color: var(--color-border);
+  --xy-controls-button-background-color: var(--color-surface);
+  --xy-controls-button-background-color-hover: var(--color-surface-sunken);
+  --xy-controls-button-color: var(--color-text);
+  --xy-controls-button-border-color: var(--color-border);
+  --xy-attribution-background-color: transparent;
+  --xy-handle-background-color: var(--color-accent);
+  --xy-handle-border-color: var(--color-surface);
+}
+
+/* ---------- Connectors ---------- */
+/* The line, its arrows and its handles all follow `color`, so hover and selection recolour everything at once. */
+.editor-canvas .react-flow__edge .connector {
+  color: var(--color-text-muted);
+}
+.editor-canvas .react-flow__edge:hover .connector,
+.editor-canvas .react-flow__edge .connector--selected,
+.editor-canvas .react-flow__edge:focus-visible .connector {
+  color: var(--color-accent) !important;
+}
+.connector__line {
+  fill: none;
+  stroke: currentColor;
+  pointer-events: none;
+}
+.connector__line--ants {
+  animation-name: connector-ants;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes connector-ants {
+  from {
+    stroke-dashoffset: var(--ants-period);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .connector__line--ants {
+    animation-play-state: paused;
+  }
+}
+/* An invisible, 10 screen-pixel hit stroke, trimmed clear of the ports at both ends. */
+.connector__hit {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 10;
+  vector-effect: non-scaling-stroke;
+  pointer-events: stroke;
+  cursor: pointer;
+}
+.connector__guide {
+  stroke: var(--color-accent);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+.connector--ghost {
+  opacity: 0.6;
+}
+.connector--ghost .connector__line {
+  stroke-dasharray: 6 4;
+}
+
+.route-handle {
+  pointer-events: all;
+  cursor: grab;
+  outline: none;
+}
+.route-handle:active {
+  cursor: grabbing;
+}
+.route-handle--point {
+  fill: currentColor;
+  stroke: var(--color-surface);
+}
+.route-handle--add,
+.route-handle--segment {
+  fill: var(--color-surface);
+  stroke: var(--color-accent);
+}
+.route-handle--ew {
+  cursor: ew-resize;
+}
+.route-handle--ns {
+  cursor: ns-resize;
+}
+.route-handle:focus-visible {
+  stroke: var(--color-focus);
+  stroke-width: 3px;
+}
+
+.connector-grab {
+  fill: var(--color-surface);
+  stroke: currentColor;
+  stroke-width: 1.5;
+  opacity: 0;
+  pointer-events: all;
+  cursor: move;
+  transition: opacity 120ms var(--ease-standard);
+}
+.react-flow__edge:hover .connector-grab,
+.connector--selected .connector-grab {
+  opacity: 1;
+}
+
+.connection-preview__line {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 2;
+  stroke-dasharray: 6 4;
+}
+.connection-preview--invalid .connection-preview__line {
+  stroke: var(--color-text-muted);
+}
+.connection-preview__point {
+  fill: var(--color-accent);
+}
+
+/* Labels: an HTML box centred on its point of the path; it scales with the canvas and wraps at word boundaries.
+   The label layer sits above every connector layer (but below a step being dragged). */
+.editor-canvas .react-flow__edgelabel-renderer {
+  z-index: 800000;
+}
+.connector-label-anchor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+}
+.connector-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: max-content;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  line-height: 1.25;
+  border: 0 solid var(--color-border);
+  border-radius: 5px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  pointer-events: all;
+  user-select: none;
+}
+.connector-label--editable {
+  cursor: grab;
+}
+.connector-label--selected {
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+.connector-label__field {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  min-width: 6rem;
+  border: 1px solid var(--color-accent);
+  border-radius: 5px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  resize: none;
+  pointer-events: all;
+}
+.connector-label__pencil {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--color-accent);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-accent);
+  pointer-events: all;
+  cursor: pointer;
+}
+.label-editor-anchor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  pointer-events: all;
+}
+.label-editor {
+  position: absolute;
+  bottom: 18px;
+  left: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 18rem;
+  padding: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-2);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+}
+.label-editor__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+.label-editor__row .input {
+  flex: 1;
+  min-width: 0;
+}
+.label-editor__chars {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 2px;
+}
+.label-editor__char {
+  padding: 2px 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+}
+.label-editor__char:hover,
+.label-editor__char:focus-visible {
+  background: var(--color-surface-sunken);
+}
+
+/* Drop on empty canvas: the ghost step and its shape menu. */
+.node--ghost {
+  width: 100%;
+  height: 100%;
+  border: 1.5px dashed var(--color-accent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+}
+.drop-menu {
+  top: auto;
+  right: auto;
+}
+
+.canvas-toast {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-4);
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-2);
+  font-size: var(--text-sm);
+}
+
+/* ---------- Node anatomy ---------- */
+
+.editor-canvas .react-flow__node {
+  /* Our bodies draw their own frames. */
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--color-text);
+  font-size: var(--text-sm);
+}
+.editor-canvas .react-flow__node:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 4px;
+}
+.node {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Box family: step, start/end, sticky note, text label. */
+.node-box {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-text-muted);
+  transition: box-shadow var(--duration-fast) var(--ease-standard);
+}
+.react-flow__node:hover .node-box {
+  box-shadow: 0 0 10px rgb(0 0 0 / 0.5);
+}
+.react-flow__node.selected .node-box {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-accent);
+}
+.node--start-end .node-box {
+  background: var(--color-surface-sunken);
+}
+/* Sticky notes keep a pale paper colour in both themes, so their text stays dark. */
+.node--note .node-box {
+  background: #fef3c7;
+  color: #1c1b19;
+  border-color: #e7d48b;
+  box-shadow: 0 11px 25px -15px rgb(0 0 0 / 0.6);
+}
+.node--note .node-text__placeholder {
+  color: #6b5d2e;
+}
+.node--label .node-box {
+  background: transparent;
+}
+.react-flow__node:hover .node--label .node-box {
+  box-shadow: none;
+  outline: 1px dashed var(--color-border);
+}
+
+.node-text {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  line-height: 1.35;
+}
+.node-text--box {
+  display: flex;
+  flex-direction: column;
+  padding: 8px var(--space-3);
+}
+.node-text--box > .node-text__content {
+  flex: none;
+  margin: auto 0;
+}
+.node-text--title {
+  padding: var(--space-2) var(--space-3);
+  font-weight: 600;
+}
+.node-text__content {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  min-height: 1.35em;
+}
+.node-text__placeholder {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+.node-text__editor {
+  outline: none;
+  cursor: text;
+  user-select: text;
+  -webkit-user-select: text;
+}
+.node[data-editing="true"] .node-box,
+.node[data-editing="true"] .node-shape__outline {
+  outline: 2px dashed var(--color-focus);
+  outline-offset: 2px;
+}
+
+.node-fit {
+  position: absolute;
+  top: 5px;
+  left: calc(100% + 8px);
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  box-shadow: var(--shadow-1);
+}
+.node-fit:hover {
+  background: var(--color-surface-sunken);
+}
+.node-fit:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Shapes: the outline is an SVG path; text wraps between two float guides. */
+.node-shape {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+  transition: filter var(--duration-fast) var(--ease-standard);
+}
+.node-shape__outline {
+  fill: var(--color-surface);
+  stroke: var(--color-text-muted);
+}
+.node-shape__detail {
+  fill: none;
+  stroke: var(--color-text-muted);
+}
+.react-flow__node:hover .node-shape {
+  filter: drop-shadow(0 0 6px rgb(0 0 0 / 0.45));
+}
+.react-flow__node.selected .node-shape__outline,
+.react-flow__node.selected .node-shape__detail {
+  stroke: var(--color-accent);
+}
+.react-flow__node.selected .node-shape {
+  filter: drop-shadow(0 0 1.5px var(--color-accent));
+}
+.node-text--shape {
+  position: relative;
+  display: flow-root;
+}
+/* No word breaking: a line too narrow for a whole word moves down to a wider row instead of splitting it. */
+.node-text--shape > .node-text__content {
+  text-align: center;
+  overflow-wrap: normal;
+}
+.wrap-guide {
+  height: 100%;
+}
+.wrap-guide--left {
+  float: left;
+}
+.wrap-guide--right {
+  float: right;
+}
+@supports not (shape-outside: polygon(0 0)) {
+  .wrap-guide {
+    display: none;
+  }
+  .node-text--shape {
+    padding: 0 20%;
+  }
+}
+
+/* Lines and sketches take the pointer only on their ink. */
+/* !important: the canvas library sets pointer-events inline on every node wrapper. */
+.editor-canvas .react-flow__node-line,
+.editor-canvas .react-flow__node-sketch {
+  pointer-events: none !important;
+}
+.editor-canvas .react-flow__node-line .react-flow__resize-control,
+.editor-canvas .react-flow__node-sketch .react-flow__resize-control {
+  pointer-events: all;
+}
+.line-node,
+.sketch-node {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+.line-node__stroke {
+  stroke: var(--color-text);
+  stroke-linecap: round;
+  pointer-events: none;
+}
+.line-node__hit {
+  stroke: transparent;
+  stroke-linecap: round;
+  pointer-events: stroke;
+  cursor: move;
+}
+.react-flow__node-line.selected .line-node__stroke {
+  filter: drop-shadow(0 0 2px var(--color-accent));
+}
+.line-node__guide {
+  stroke: var(--color-accent);
+  stroke-width: 2;
+  stroke-dasharray: 6 4;
+  opacity: 0.6;
+  pointer-events: none;
+}
+.line-rotate {
+  pointer-events: all;
+}
+.line-rotate__stem {
+  stroke: var(--color-text-muted);
+  stroke-width: 1;
+  stroke-dasharray: 1 3;
+}
+.line-rotate__disc {
+  fill: var(--color-surface);
+  stroke: var(--color-accent);
+  stroke-width: 1.5;
+}
+.line-rotate__glyph {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.line-rotate__hit {
+  fill: transparent;
+  cursor: grab;
+  touch-action: none;
+}
+.line-rotate__hit:active {
+  cursor: grabbing;
+}
+.sketch-node__ink {
+  fill: var(--color-text);
+  pointer-events: visiblePainted;
+  cursor: move;
+}
+.react-flow__node-sketch.selected .sketch-node__ink {
+  filter: drop-shadow(0 0 2px var(--color-accent));
+}
+
+/* Groups draw below edges; children and edges sit on top. */
+.node-group {
+  width: 100%;
+  height: 100%;
+  background: color-mix(in srgb, var(--color-surface-sunken) 70%, transparent);
+  border: 1px solid var(--color-text-muted);
+}
+.react-flow__node.selected .node-group {
+  border-color: var(--color-focus);
+  box-shadow: 0 0 0 1px var(--color-focus);
+}
+.node-group__release {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  padding: 2px var(--space-2);
+  font-size: var(--text-xs);
+  white-space: nowrap;
+}
+
+/* Connection handles: hidden until hover, kept while selected or connecting, never in view mode. */
+.editor-canvas .react-flow__handle.node-handle {
+  width: 10px;
+  height: 10px;
+  opacity: 0;
+  transition: opacity 150ms var(--ease-standard);
+}
+.react-flow__node:hover .node-handle,
+.react-flow__node.selected .node-handle,
+.react-flow.connecting .node-handle,
+.editor-canvas .react-flow__handle.node-handle:focus-visible {
+  opacity: 1;
+}
+.editor-canvas .react-flow__handle.node-handle--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+/* While a connection is dragged, other steps' ports move 20 screen pixels outward, clear of the drop zone. */
+.editor-canvas .react-flow__handle.node-handle--outward.react-flow__handle-top {
+  translate: 0 calc(-20px / var(--canvas-zoom, 1));
+}
+.editor-canvas .react-flow__handle.node-handle--outward.react-flow__handle-bottom {
+  translate: 0 calc(20px / var(--canvas-zoom, 1));
+}
+.editor-canvas .react-flow__handle.node-handle--outward.react-flow__handle-left {
+  translate: calc(-20px / var(--canvas-zoom, 1)) 0;
+}
+.editor-canvas .react-flow__handle.node-handle--outward.react-flow__handle-right {
+  translate: calc(20px / var(--canvas-zoom, 1)) 0;
+}
+/* The drop zone: the central 70% of a step accepts a connection anywhere. */
+.node-drop-zone {
+  position: absolute;
+  inset: 15%;
+  z-index: 1;
+  border: 1.5px dashed transparent;
+  border-radius: 6px;
+  pointer-events: all;
+}
+.node-drop-zone:hover {
+  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+}
+
+.editor-canvas .react-flow__resize-control.node-resize-handle {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-accent);
+}
+.editor-canvas .react-flow__resize-control.node-resize-line {
+  border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+}
+
+/* ---------- Draw mode ---------- */
+.sketch-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  cursor: crosshair;
+  touch-action: none;
+}
+.sketch-overlay__preview {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.sketch-overlay__preview path {
+  fill: var(--color-text);
+}
+.sketch-tools {
+  position: absolute;
+  top: var(--space-3);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-2);
+  cursor: default;
+}
+.sketch-tools__field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+}
+
+/* ---------- Toolbar menu ---------- */
+.button-icon {
+  padding: var(--space-2);
+}
+.button-small {
+  padding: 2px var(--space-2);
+  font-size: var(--text-sm);
+}
+.menu-anchor {
+  position: relative;
+}
+.menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  min-width: 11rem;
+  padding: var(--space-1);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-2);
+}
+.menu__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.menu__item:hover,
+.menu__item:focus-visible {
+  background: var(--color-surface-sunken);
+  outline: none;
+}
+
+/* ---------- Properties panel ---------- */
+.properties {
+  flex: none;
+  width: 17rem;
+  overflow-y: auto;
+  padding: var(--space-3) var(--space-4);
+  border-left: 1px solid var(--color-border);
+  background: var(--color-surface);
+  font-size: var(--text-sm);
+}
+.properties__title {
+  font-size: var(--text-lg);
+  margin: 0 0 var(--space-2);
+}
+.properties__empty {
+  color: var(--color-text-muted);
+}
+.prop-section {
+  padding: var(--space-3) 0;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.prop-section h3 {
+  margin: 0;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+}
+.prop-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+.prop-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.prop-field label {
+  font-weight: 600;
+  font-size: var(--text-xs);
+}
+.prop-field__input {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.prop-field__suffix {
+  color: var(--color-text-muted);
+}
+.prop-field--range input {
+  width: 100%;
+}
+.prop-field--range output {
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+.input-compact {
+  padding: 4px var(--space-2);
+  font-size: var(--text-sm);
+  width: 100%;
+  min-width: 0;
+}
+.color-input {
+  width: 2.5rem;
+  height: 1.75rem;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: none;
+}
+.prop-check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+@media (max-width: 52rem) {
+  .editor-body {
+    flex-direction: column;
+  }
+  .properties {
+    width: auto;
+    max-height: 40vh;
+    border-left: none;
+    border-top: 1px solid var(--color-border);
+  }
+}
+
+/* ---------- Editor tools ---------- */
+/* Alignment guides: one canvas over the steps, never in the way of the pointer. */
+.guide-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.history-buttons {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.selection-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  padding: 3px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-2);
+}
+.selection-toolbar__group {
+  display: flex;
+  gap: 2px;
+}
+.selection-toolbar__group + .selection-toolbar__group {
+  padding-left: var(--space-1);
+  border-left: 1px solid var(--color-border);
+}
+.selection-toolbar__button {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+}
+.selection-toolbar__button:hover:not(:disabled) {
+  background: var(--color-surface-sunken);
+}
+.selection-toolbar__button:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 1px;
+}
+.selection-toolbar__button[aria-pressed="true"] {
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+}
+.selection-toolbar__button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.layout-menu {
+  min-width: 15rem;
+  gap: var(--space-2);
+  padding: var(--space-3);
+}
+.layout-menu__row {
+  display: flex;
+  gap: var(--space-2);
+}
+.layout-menu__row .button[aria-pressed="true"] {
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  border-color: var(--color-accent);
+}
+.layout-menu__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+}
+.layout-menu .field-hint {
+  margin: 0;
+}
+
+/* A search result's step glows for a moment. */
+.node-pulse {
+  position: absolute;
+  inset: -6px;
+  border-radius: 12px;
+  pointer-events: none;
+  box-shadow: 0 0 0 3px var(--color-accent);
+  animation: node-pulse 1.2s var(--ease-standard) forwards;
+}
+@keyframes node-pulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .node-pulse {
+    animation-duration: 1ms;
+    animation-fill-mode: none;
+    opacity: 1;
+  }
+}
+
+.search-panel {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: min(24rem, calc(100% - 2 * var(--space-3)));
+  max-height: calc(100% - 2 * var(--space-3));
+  padding: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-2);
+  font-size: var(--text-sm);
+}
+.search-panel__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-muted);
+}
+.search-panel__bar .input {
+  flex: 1;
+}
+.search-panel__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+.search-panel__empty {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+.search-panel__results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--text-xs);
+  cursor: pointer;
+}
+.chip[aria-pressed="true"] {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-accent-contrast);
+}
+.chip__count {
+  font-weight: 600;
+}
+.search-result {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  padding: var(--space-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+}
+.search-result:hover,
+.search-result[aria-current="true"] {
+  background: var(--color-surface-sunken);
+  border-color: var(--color-border);
+}
+.search-result:focus-visible {
+  outline: 2px solid var(--color-focus);
+}
+.search-result__meta {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+.search-result__excerpt {
+  overflow-wrap: anywhere;
+}
+.search-result__excerpt mark {
+  background: color-mix(in srgb, var(--color-accent) 25%, transparent);
+  color: inherit;
+  border-radius: 2px;
+}
+
+/* Shape library drawer. */
+.library {
+  flex: none;
+  width: 13rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-right: 1px solid var(--color-border);
+  background: var(--color-surface);
+  font-size: var(--text-sm);
+}
+.library__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.library__title {
+  margin: 0;
+  font-size: var(--text-lg);
+}
+.library__section-title {
+  margin: var(--space-2) 0 var(--space-1);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+}
+.library__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-1);
+}
+.library-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+  padding: var(--space-2) var(--space-1);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: var(--text-xs);
+  cursor: grab;
+}
+.library-item:hover {
+  border-color: var(--color-accent);
+}
+.library-item:focus-visible {
+  outline: 2px solid var(--color-focus);
+}
+.library-item:active {
+  cursor: grabbing;
+}
+.library-item__preview {
+  color: var(--color-text-muted);
+}
+.library-rail {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-2) var(--space-1);
+  border-right: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+.library-rail__tab {
+  writing-mode: vertical-rl;
+  display: inline-flex;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-1);
+}
+@media (max-width: 52rem) {
+  .library {
+    width: auto;
+    max-height: 30vh;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .library__items {
+    grid-template-columns: repeat(auto-fill, minmax(5rem, 1fr));
+  }
+  .library-rail {
+    flex-direction: row;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .library-rail__tab {
+    writing-mode: horizontal-tb;
+  }
+}
+
+/* ---------- Viewing ---------- */
+/* The canvas stays invisible until its opening view is applied, so nobody sees a default view first. */
+.canvas--opening .react-flow__viewport {
+  visibility: hidden;
+}
+.editor-canvas:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: -3px;
+}
+
+.view-footer {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  max-width: calc(100% - 32px);
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-2);
+}
+.view-footer .button[aria-pressed="true"] {
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+}
+.view-footer__modes,
+.view-footer__group {
+  display: flex;
+  gap: 2px;
+}
+.view-footer__group {
+  padding-right: var(--space-2);
+  margin-right: var(--space-1);
+  border-right: 1px solid var(--color-border);
+}
+.zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.zoom-slider {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.zoom-slider input {
+  width: 80px;
+  accent-color: var(--color-accent);
+}
+.zoom-slider__bubble {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-size: var(--text-xs);
+}
+.zoom-label {
+  min-width: 3.6rem;
+  justify-content: center;
+  padding-inline: var(--space-1);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+.view-footer .button-icon {
+  padding: 6px;
+}
+.editor-actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-left: auto;
+}
+.menu--up {
+  top: auto;
+  bottom: calc(100% + 8px);
+}
+.menu__separator {
+  width: 100%;
+  margin: var(--space-1) 0;
+  border: 0;
+  border-top: 1px solid var(--color-border);
+}
+.menu__item:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.view-scrollbar {
+  position: absolute;
+  z-index: 5;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--color-border) 45%, transparent);
+}
+.view-scrollbar--horizontal {
+  left: 50px;
+  right: 50px;
+  bottom: 3px;
+  height: 10px;
+}
+.view-scrollbar--vertical {
+  top: 50px;
+  bottom: 50px;
+  right: 3px;
+  width: 10px;
+}
+.view-scrollbar__thumb {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-text-muted);
+  opacity: 0.6;
+  cursor: grab;
+  touch-action: none;
+}
+.view-scrollbar--horizontal .view-scrollbar__thumb {
+  right: auto;
+}
+.view-scrollbar--vertical .view-scrollbar__thumb {
+  bottom: auto;
+}
+.view-scrollbar__thumb:hover,
+.view-scrollbar__thumb:active {
+  opacity: 0.9;
+}
+.view-scrollbar__thumb:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 1px;
+  opacity: 1;
+}
+
+.view-menu {
+  min-width: 19rem;
+}
+.view-menu__modes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.view-menu__modes legend {
+  margin-bottom: var(--space-1);
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+.view-menu__mode {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+.view-menu__mode input {
+  margin-top: 3px;
+}
+.view-menu__mode .field-hint {
+  display: block;
+}
+.export-menu {
+  min-width: 17rem;
+}
+.workspace-navigation {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+}
+
+/* The read-only preview: only the background colour, a soft glow on hover, and the arrow cursor. */
+.preview-canvas .react-flow__pane {
+  cursor: default;
+}
+.preview-canvas .react-flow__node {
+  cursor: default;
+}
+.preview-canvas .react-flow__node:hover .node {
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--color-accent) 40%, transparent));
+}
+
+/* The build-up animation hides elements until their turn; the fades and the line draw are Web Animations. */
+.node[data-reveal="hidden"] {
+  opacity: 0;
+}
+.connector[data-reveal="hidden"] {
+  visibility: hidden;
+}
+
+/* Live collaboration: presence avatars, peers' cursors and badges. */
+.presence-bar {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.presence-avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-left: -6px;
+  border: 2px solid var(--color-surface);
+  border-radius: 50%;
+  background: var(--peer-color);
+  color: var(--peer-text);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+.presence-avatar:first-child {
+  margin-left: 0;
+}
+.presence-avatar__count {
+  position: absolute;
+  right: -6px;
+  bottom: -4px;
+  min-width: 16px;
+  padding: 0 3px;
+  border-radius: 8px;
+  background: var(--color-text);
+  color: var(--color-surface);
+  font-size: 0.6rem;
+  line-height: 16px;
+  text-align: center;
+}
+.collab-toggle[aria-checked="true"] {
+  color: var(--color-accent);
+}
+
+/* The presence layer lives in the canvas's transformed viewport; each child carries one transform. */
+.presence-layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 900000;
+  pointer-events: none;
+}
+.peer-cursor,
+.peer-badge {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+.peer-cursor {
+  transition: opacity 300ms ease;
+}
+.peer-cursor--stale {
+  opacity: 0;
+}
+.peer-cursor__arrow {
+  display: block;
+  fill: var(--peer-color);
+  stroke: var(--color-surface);
+  stroke-width: 1.5;
+  filter: drop-shadow(0 1px 1px rgb(0 0 0 / 0.25));
+}
+.peer-cursor__tag,
+.peer-badge__label {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--peer-color);
+  color: var(--peer-text);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  white-space: nowrap;
+}
+.peer-cursor__tag {
+  position: absolute;
+  left: 14px;
+  top: 18px;
+}
+.peer-badge__label {
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+}
+.peer-badge[data-editing] .peer-badge__label {
+  outline: 2px solid var(--color-surface);
+}
+@media (prefers-reduced-motion: reduce) {
+  .peer-cursor {
+    transition: none;
+  }
+}
+
+/* ---------- Version history and compare ---------- */
+:root {
+  --diff-added: var(--color-success);
+  --diff-removed: var(--color-danger);
+  --diff-changed: var(--color-warning);
+  /* Text on a highlight colour: white on the light theme's dark tones, near-black on the dark theme's light ones. */
+  --diff-tag-text: var(--color-accent-contrast);
+}
+
+.side-column {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  width: 17rem;
+  min-height: 0;
+  border-left: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+.side-column__switch {
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3) 0;
+}
+.side-column__switch .button[aria-pressed="true"] {
+  background: var(--color-surface-sunken);
+  font-weight: 600;
+}
+.side-column .properties {
+  flex: 1;
+  width: auto;
+  min-height: 0;
+  border-left: none;
+}
+.version-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.version-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+.version-panel__head h2 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+}
+.version-panel__save {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.version-panel__notice:empty {
+  display: none;
+}
+.version-panel__notice--error {
+  color: var(--color-danger);
+}
+.version-panel__hint {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+.version-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.version {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+.version__title {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.version__meta {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+.version__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+.version__confirm p {
+  margin: 0 0 var(--space-2);
+}
+
+.compare {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+}
+.compare:focus {
+  outline: none;
+}
+.compare__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+.compare__title {
+  margin: 0;
+  font-size: var(--text-lg);
+}
+.compare__picker {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+}
+.compare__picker select {
+  width: auto;
+  max-width: 16rem;
+}
+.segmented,
+.compare__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+.segmented .button[aria-pressed="true"] {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-accent-contrast);
+}
+.diff-filter {
+  box-shadow: inset 0 -3px 0 var(--swatch);
+}
+.diff-filter[aria-pressed="false"] {
+  box-shadow: none;
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+}
+.diff-filter--added,
+.diff-swatch--added {
+  --swatch: var(--diff-added);
+}
+.diff-filter--removed,
+.diff-swatch--removed {
+  --swatch: var(--diff-removed);
+}
+.diff-filter--changed,
+.diff-swatch--changed {
+  --swatch: var(--diff-changed);
+}
+.diff-swatch--plain {
+  --swatch: var(--color-border);
+}
+.compare__close {
+  margin-left: auto;
+}
+.compare__summary {
+  margin: 0;
+  padding: var(--space-1) var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+.compare__body {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  position: relative;
+}
+.compare__body--side .compare-canvas + .compare-canvas {
+  border-left: 1px solid var(--color-border);
+}
+.compare-canvas {
+  display: flex;
+  flex-direction: column;
+}
+.compare-canvas__title {
+  margin: 0;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-sm);
+}
+.compare-canvas .react-flow {
+  flex: 1;
+  min-height: 0;
+}
+.compare__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  list-style: none;
+  margin: 0;
+  padding: var(--space-2) var(--space-4);
+  border-top: 1px solid var(--color-border);
+  font-size: var(--text-xs);
+}
+.compare__legend-item::before {
+  content: "";
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-right: var(--space-1);
+  border-radius: 50%;
+  vertical-align: middle;
+  background: var(--swatch);
+}
+.diff-card {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: 10;
+  width: min(18rem, calc(100% - 2 * var(--space-3)));
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-2);
+  font-size: var(--text-sm);
+}
+.diff-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.diff-card ul {
+  margin: var(--space-1) 0 0;
+  padding-left: var(--space-4);
+}
+.diff-card p {
+  margin: var(--space-1) 0 0;
+}
+
+/* Highlights: computed classes on the canvas library's wrappers, so they survive re-renders and panning. */
+.compare-canvas .react-flow__node.diff,
+.compare-canvas .react-flow__edge.diff {
+  transition:
+    opacity var(--duration-base) var(--ease-standard),
+    filter var(--duration-base) var(--ease-standard);
+}
+.compare-canvas .react-flow__node.diff--plain,
+.compare-canvas .react-flow__edge.diff--plain {
+  filter: grayscale(1);
+}
+.compare-canvas .react-flow__node.diff--added {
+  filter: drop-shadow(0 0 8px var(--diff-added)) drop-shadow(0 0 2px var(--diff-added));
+}
+.compare-canvas .react-flow__node.diff--changed {
+  filter: drop-shadow(0 0 8px var(--diff-changed)) drop-shadow(0 0 2px var(--diff-changed));
+}
+.compare-canvas .react-flow__node.diff--removed {
+  filter: drop-shadow(0 0 8px var(--diff-removed)) drop-shadow(0 0 2px var(--diff-removed));
+}
+/* The body fades, the tag keeps its full contrast. */
+.compare-canvas .react-flow__node.diff--removed > * {
+  opacity: 0.5;
+}
+.compare-canvas .react-flow__node.diff--hidden,
+.compare-canvas .react-flow__edge.diff--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.compare-canvas .react-flow__edge.diff--added .connector {
+  color: var(--diff-added);
+}
+.compare-canvas .react-flow__edge.diff--changed .connector {
+  color: var(--diff-changed);
+}
+.compare-canvas .react-flow__edge.diff--removed .connector {
+  color: var(--diff-removed);
+}
+.compare-canvas .react-flow__edge.diff--removed path {
+  stroke-dasharray: 6 4;
+}
+.compare-canvas .react-flow__node.diff--picked {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 4px;
+}
+.compare-canvas .react-flow__node.diff--added::after,
+.compare-canvas .react-flow__node.diff--removed::after,
+.compare-canvas .react-flow__node.diff--changed::after {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 4px);
+  padding: 0 6px;
+  border-radius: var(--radius-pill);
+  background: var(--swatch);
+  color: var(--diff-tag-text);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.compare-canvas .react-flow__node.diff--added::after {
+  --swatch: var(--diff-added);
+  content: "Added";
+}
+.compare-canvas .react-flow__node.diff--removed::after {
+  --swatch: var(--diff-removed);
+  content: "Removed";
+}
+.compare-canvas .react-flow__node.diff--changed::after {
+  --swatch: var(--diff-changed);
+  content: "Changed";
+}
+@media (prefers-reduced-motion: reduce) {
+  .compare-canvas .react-flow__node.diff,
+  .compare-canvas .react-flow__edge.diff {
+    transition: none;
+  }
+}
+@media (max-width: 52rem) {
+  .side-column {
+    width: auto;
+    max-height: 40vh;
+    border-left: none;
+    border-top: 1px solid var(--color-border);
+  }
+  .side-column .properties {
+    max-height: none;
+    border-top: none;
+  }
+  .compare__body--side {
+    flex-direction: column;
+  }
+  .compare__body--side .compare-canvas + .compare-canvas {
+    border-left: none;
+    border-top: 1px solid var(--color-border);
+  }
+}
+
+/* Stress page */
+.stress {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.stress-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+.stress-header__title {
+  margin: 0;
+  font-size: var(--text-lg);
+}
+.stress-header__stats {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.stress-header__group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+.stress-header__group [aria-current="page"],
+.stress-header__group [data-on="false"] {
+  background: var(--color-surface-sunken);
+  font-weight: 600;
+}
+.stress-header__warning {
+  margin: 0;
+  color: var(--color-text);
+  font-weight: 600;
+}
