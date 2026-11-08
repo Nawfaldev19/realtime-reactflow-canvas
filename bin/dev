@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# One-command local start.
+# Installs dependencies (into the project folders only), creates and seeds the
+# database on first run, then runs the API on :3000 and the web app on :5173.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+require() {
+  command -v "$1" >/dev/null 2>&1 || { echo "Missing $1. $2" >&2; exit 1; }
+}
+require ruby "Install Ruby $(cat server/.ruby-version) (see README)."
+require node "Install Node.js 20 or newer (see README)."
+
+echo "==> Installing server gems into server/vendor/bundle"
+(cd server && bundle config set --local path vendor/bundle >/dev/null && bundle install --quiet)
+
+echo "==> Preparing the database (seeds demo data on first run)"
+(cd server && bin/rails db:prepare)
+
+echo "==> Installing client packages"
+(cd client && npm install --no-audit --no-fund --silent)
+
+echo "==> Starting API on http://localhost:3000 and web app on http://localhost:5173"
+trap 'kill 0' EXIT INT TERM
+(cd server && bin/rails server -p 3000) &
+(cd client && npm run dev) &
+wait
