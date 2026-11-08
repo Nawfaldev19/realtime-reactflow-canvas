@@ -16,5 +16,8 @@ module ActiveSupport
   class TestCase
     include TestData
     include ActiveSupport::Testing::TimeHelpers
+
+    # The sign-in throttle counts per process; every test starts with fresh counts.
+    setup { Mutations::SignInAsDemo::THROTTLE.reset! }
   end
 end

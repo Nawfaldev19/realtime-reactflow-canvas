@@ -1,0 +1,3635 @@
+{
+ "about": "Shared operation cases: the client (applyOperation) and the server (OperationApplier) must both turn document + operation into expected, skipping the given number of leaf operations.",
+ "cases": [
+  {
+   "name": "node.add appends a top-level node and advances nextNumber",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "operation": {
+    "type": "node.add",
+    "node": {
+     "id": "n3",
+     "key": "n3",
+     "kind": "step",
+     "number": 7,
+     "position": {
+      "x": 40,
+      "y": 80
+     },
+     "size": {
+      "width": 160,
+      "height": 60
+     },
+     "parentId": null,
+     "z": 7,
+     "style": {},
+     "data": {
+      "text": "n3"
+     }
+    }
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     },
+     {
+      "id": "n3",
+      "key": "n3",
+      "kind": "step",
+      "number": 7,
+      "position": {
+       "x": 40,
+       "y": 80
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 7,
+      "style": {},
+      "data": {
+       "text": "n3"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 8
+   },
+   "skipped": 0
+  },
+  {
+   "name": "node.add skips an id that already exists",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "operation": {
+    "type": "node.add",
+    "node": {
+     "id": "a",
+     "key": "a",
+     "kind": "step",
+     "number": 9,
+     "position": {
+      "x": 0,
+      "y": 0
+     },
+     "size": {
+      "width": 160,
+      "height": 60
+     },
+     "parentId": null,
+     "z": 9,
+     "style": {},
+     "data": {
+      "text": "a"
+     }
+    }
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "skipped": 1
+  },
+  {
+   "name": "node.add skips a parent that is not a group",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "operation": {
+    "type": "node.add",
+    "node": {
+     "id": "n3",
+     "key": "n3",
+     "kind": "step",
+     "number": 3,
+     "position": {
+      "x": 0,
+      "y": 0
+     },
+     "size": {
+      "width": 160,
+      "height": 60
+     },
+     "parentId": "b",
+     "z": 3,
+     "style": {},
+     "data": {
+      "text": "n3"
+     }
+    }
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "skipped": 1
+  },
+  {
+   "name": "node.add puts a child after its group, by stacking order",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "g",
+      "key": "g",
+      "kind": "group",
+      "number": 3,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": -1,
+      "style": {},
+      "data": {
+       "text": "g"
+      }
+     },
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     },
+     {
+      "id": "c",
+      "key": "c",
+      "kind": "step",
+      "number": 4,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": "g",
+      "z": 4,
+      "style": {},
+      "data": {
+       "text": "c"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     },
+     {
+      "id": "e2",
+      "key": "e2",
+      "kind": "connector",
+      "source": "a",
+      "target": "c",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 5
+   },
+   "operation": {
+    "type": "node.add",
+    "node": {
+     "id": "d",
+     "key": "d",
+     "kind": "step",
+     "number": 5,
+     "position": {
+      "x": 0,
+      "y": 0
+     },
+     "size": {
+      "width": 160,
+      "height": 60
+     },
+     "parentId": "g",
+     "z": 0,
+     "style": {},
+     "data": {
+      "text": "d"
+     }
+    }
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "g",
+      "key": "g",
+      "kind": "group",
+      "number": 3,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": -1,
+      "style": {},
+      "data": {
+       "text": "g"
+      }
+     },
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     },
+     {
+      "id": "d",
+      "key": "d",
+      "kind": "step",
+      "number": 5,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": "g",
+      "z": 0,
+      "style": {},
+      "data": {
+       "text": "d"
+      }
+     },
+     {
+      "id": "c",
+      "key": "c",
+      "kind": "step",
+      "number": 4,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": "g",
+      "z": 4,
+      "style": {},
+      "data": {
+       "text": "c"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     },
+     {
+      "id": "e2",
+      "key": "e2",
+      "kind": "connector",
+      "source": "a",
+      "target": "c",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 6
+   },
+   "skipped": 0
+  },
+  {
+   "name": "node.update replaces fields and merges data per key",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "operation": {
+    "type": "node.update",
+    "id": "a",
+    "fields": {
+     "position": {
+      "x": 25,
+      "y": -10
+     },
+     "data": {
+      "shape": "hexagon"
+     }
+    }
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 25,
+       "y": -10
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a",
+       "shape": "hexagon"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "skipped": 0
+  },
+  {
+   "name": "node.update removes a data key sent as null",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a",
+       "color": "#336699"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "operation": {
+    "type": "node.update",
+    "id": "a",
+    "fields": {
+     "data": {
+      "color": null
+     }
+    }
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "skipped": 0
+  },
+  {
+   "name": "node.update with the same values changes nothing",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "operation": {
+    "type": "node.update",
+    "id": "b",
+    "fields": {
+     "position": {
+      "x": 0,
+      "y": 0
+     }
+    }
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "skipped": 0
+  },
+  {
+   "name": "node.update skips a missing node",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "operation": {
+    "type": "node.update",
+    "id": "zz",
+    "fields": {
+     "z": 4
+    }
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "skipped": 1
+  },
+  {
+   "name": "node.update skips a parent that is not a group",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "operation": {
+    "type": "node.update",
+    "id": "a",
+    "fields": {
+     "parentId": "b"
+    }
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "skipped": 1
+  },
+  {
+   "name": "node.update skips a parent that would create a cycle",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "g",
+      "key": "g",
+      "kind": "group",
+      "number": 3,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": -1,
+      "style": {},
+      "data": {
+       "text": "g"
+      }
+     },
+     {
+      "id": "h",
+      "key": "h",
+      "kind": "group",
+      "number": 5,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": "g",
+      "z": -1,
+      "style": {},
+      "data": {
+       "text": "h"
+      }
+     }
+    ],
+    "edges": [],
+    "nextNumber": 6
+   },
+   "operation": {
+    "type": "node.update",
+    "id": "g",
+    "fields": {
+     "parentId": "h"
+    }
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "g",
+      "key": "g",
+      "kind": "group",
+      "number": 3,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": -1,
+      "style": {},
+      "data": {
+       "text": "g"
+      }
+     },
+     {
+      "id": "h",
+      "key": "h",
+      "kind": "group",
+      "number": 5,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": "g",
+      "z": -1,
+      "style": {},
+      "data": {
+       "text": "h"
+      }
+     }
+    ],
+    "edges": [],
+    "nextNumber": 6
+   },
+   "skipped": 1
+  },
+  {
+   "name": "node.update moves a child out of its group",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "g",
+      "key": "g",
+      "kind": "group",
+      "number": 3,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": -1,
+      "style": {},
+      "data": {
+       "text": "g"
+      }
+     },
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     },
+     {
+      "id": "c",
+      "key": "c",
+      "kind": "step",
+      "number": 4,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": "g",
+      "z": 4,
+      "style": {},
+      "data": {
+       "text": "c"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     },
+     {
+      "id": "e2",
+      "key": "e2",
+      "kind": "connector",
+      "source": "a",
+      "target": "c",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 5
+   },
+   "operation": {
+    "type": "node.update",
+    "id": "c",
+    "fields": {
+     "parentId": null,
+     "position": {
+      "x": 300,
+      "y": 0
+     }
+    }
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "g",
+      "key": "g",
+      "kind": "group",
+      "number": 3,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": -1,
+      "style": {},
+      "data": {
+       "text": "g"
+      }
+     },
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     },
+     {
+      "id": "c",
+      "key": "c",
+      "kind": "step",
+      "number": 4,
+      "position": {
+       "x": 300,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 4,
+      "style": {},
+      "data": {
+       "text": "c"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     },
+     {
+      "id": "e2",
+      "key": "e2",
+      "kind": "connector",
+      "source": "a",
+      "target": "c",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 5
+   },
+   "skipped": 0
+  },
+  {
+   "name": "node.update moves a node into a group",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "g",
+      "key": "g",
+      "kind": "group",
+      "number": 3,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": -1,
+      "style": {},
+      "data": {
+       "text": "g"
+      }
+     },
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     },
+     {
+      "id": "c",
+      "key": "c",
+      "kind": "step",
+      "number": 4,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": "g",
+      "z": 4,
+      "style": {},
+      "data": {
+       "text": "c"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     },
+     {
+      "id": "e2",
+      "key": "e2",
+      "kind": "connector",
+      "source": "a",
+      "target": "c",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 5
+   },
+   "operation": {
+    "type": "node.update",
+    "id": "a",
+    "fields": {
+     "parentId": "g",
+     "position": {
+      "x": 10,
+      "y": 20
+     }
+    }
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "g",
+      "key": "g",
+      "kind": "group",
+      "number": 3,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": -1,
+      "style": {},
+      "data": {
+       "text": "g"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     },
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 10,
+       "y": 20
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": "g",
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "c",
+      "key": "c",
+      "kind": "step",
+      "number": 4,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": "g",
+      "z": 4,
+      "style": {},
+      "data": {
+       "text": "c"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     },
+     {
+      "id": "e2",
+      "key": "e2",
+      "kind": "connector",
+      "source": "a",
+      "target": "c",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 5
+   },
+   "skipped": 0
+  },
+  {
+   "name": "node.remove removes nested children and attached edges",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "g",
+      "key": "g",
+      "kind": "group",
+      "number": 3,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": -1,
+      "style": {},
+      "data": {
+       "text": "g"
+      }
+     },
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     },
+     {
+      "id": "c",
+      "key": "c",
+      "kind": "step",
+      "number": 4,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": "g",
+      "z": 4,
+      "style": {},
+      "data": {
+       "text": "c"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     },
+     {
+      "id": "e2",
+      "key": "e2",
+      "kind": "connector",
+      "source": "a",
+      "target": "c",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 5
+   },
+   "operation": {
+    "type": "node.remove",
+    "id": "g"
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 5
+   },
+   "skipped": 0
+  },
+  {
+   "name": "node.remove of a missing node changes nothing",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "operation": {
+    "type": "node.remove",
+    "id": "zz"
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "skipped": 0
+  },
+  {
+   "name": "edge.add skips a missing endpoint",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "operation": {
+    "type": "edge.add",
+    "edge": {
+     "id": "e9",
+     "key": "e9",
+     "kind": "connector",
+     "source": "a",
+     "target": "zz",
+     "sourceSide": null,
+     "targetSide": null,
+     "route": {
+      "style": "step",
+      "points": []
+     },
+     "label": null,
+     "style": {}
+    }
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "skipped": 1
+  },
+  {
+   "name": "edge.add appends a connector",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "operation": {
+    "type": "edge.add",
+    "edge": {
+     "id": "e9",
+     "key": "e9",
+     "kind": "connector",
+     "source": "b",
+     "target": "a",
+     "sourceSide": null,
+     "targetSide": null,
+     "route": {
+      "style": "step",
+      "points": []
+     },
+     "label": null,
+     "style": {}
+    }
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     },
+     {
+      "id": "e9",
+      "key": "e9",
+      "kind": "connector",
+      "source": "b",
+      "target": "a",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "skipped": 0
+  },
+  {
+   "name": "edge.update skips a target that does not exist",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "operation": {
+    "type": "edge.update",
+    "id": "e1",
+    "fields": {
+     "target": "zz"
+    }
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "skipped": 1
+  },
+  {
+   "name": "edge.update replaces the label",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "operation": {
+    "type": "edge.update",
+    "id": "e1",
+    "fields": {
+     "label": {
+      "text": "yes",
+      "t": 0.5
+     }
+    }
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": {
+       "text": "yes",
+       "t": 0.5
+      },
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "skipped": 0
+  },
+  {
+   "name": "edge.remove of a missing edge changes nothing",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "operation": {
+    "type": "edge.remove",
+    "id": "zz"
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "skipped": 0
+  },
+  {
+   "name": "layout.set stores an automatic layout",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "operation": {
+    "type": "layout.set",
+    "layout": {
+     "engine": "dagre",
+     "direction": "TB",
+     "manual": {
+      "nodes": {
+       "a": {
+        "x": 0,
+        "y": 0,
+        "width": 160,
+        "height": 60
+       }
+      },
+      "edges": {}
+     }
+    }
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3,
+    "layout": {
+     "engine": "dagre",
+     "direction": "TB",
+     "manual": {
+      "nodes": {
+       "a": {
+        "x": 0,
+        "y": 0,
+        "width": 160,
+        "height": 60
+       }
+      },
+      "edges": {}
+     }
+    }
+   },
+   "skipped": 0
+  },
+  {
+   "name": "layout.set null returns to manual positioning",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3,
+    "layout": {
+     "engine": "dagre",
+     "direction": "TB",
+     "manual": {
+      "nodes": {
+       "a": {
+        "x": 0,
+        "y": 0,
+        "width": 160,
+        "height": 60
+       }
+      },
+      "edges": {}
+     }
+    }
+   },
+   "operation": {
+    "type": "layout.set",
+    "layout": null
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "skipped": 0
+  },
+  {
+   "name": "a batch applies in order and counts each skipped leaf",
+   "document": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [
+     {
+      "id": "e1",
+      "key": "e1",
+      "kind": "connector",
+      "source": "a",
+      "target": "b",
+      "sourceSide": null,
+      "targetSide": null,
+      "route": {
+       "style": "step",
+       "points": []
+      },
+      "label": null,
+      "style": {}
+     }
+    ],
+    "nextNumber": 3
+   },
+   "operation": {
+    "type": "batch",
+    "ops": [
+     {
+      "type": "node.add",
+      "node": {
+       "id": "n3",
+       "key": "n3",
+       "kind": "step",
+       "number": 7,
+       "position": {
+        "x": 40,
+        "y": 80
+       },
+       "size": {
+        "width": 160,
+        "height": 60
+       },
+       "parentId": null,
+       "z": 7,
+       "style": {},
+       "data": {
+        "text": "n3"
+       }
+      }
+     },
+     {
+      "type": "node.update",
+      "id": "n3",
+      "fields": {
+       "z": 0
+      }
+     },
+     {
+      "type": "edge.add",
+      "edge": {
+       "id": "e3",
+       "key": "e3",
+       "kind": "connector",
+       "source": "n3",
+       "target": "missing",
+       "sourceSide": null,
+       "targetSide": null,
+       "route": {
+        "style": "step",
+        "points": []
+       },
+       "label": null,
+       "style": {}
+      }
+     },
+     {
+      "type": "edge.remove",
+      "id": "e1"
+     },
+     {
+      "type": "batch",
+      "ops": [
+       {
+        "type": "node.update",
+        "id": "gone",
+        "fields": {
+         "z": 1
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "expected": {
+    "schemaVersion": 1,
+    "nodes": [
+     {
+      "id": "n3",
+      "key": "n3",
+      "kind": "step",
+      "number": 7,
+      "position": {
+       "x": 40,
+       "y": 80
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 0,
+      "style": {},
+      "data": {
+       "text": "n3"
+      }
+     },
+     {
+      "id": "a",
+      "key": "a",
+      "kind": "step",
+      "number": 1,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 1,
+      "style": {},
+      "data": {
+       "text": "a"
+      }
+     },
+     {
+      "id": "b",
+      "key": "b",
+      "kind": "step",
+      "number": 2,
+      "position": {
+       "x": 0,
+       "y": 0
+      },
+      "size": {
+       "width": 160,
+       "height": 60
+      },
+      "parentId": null,
+      "z": 2,
+      "style": {},
+      "data": {
+       "text": "b"
+      }
+     }
+    ],
+    "edges": [],
+    "nextNumber": 8
+   },
+   "skipped": 2
+  }
+ ]
+}
