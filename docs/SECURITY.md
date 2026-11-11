@@ -9,7 +9,7 @@ What the demo protects, how, and what it knowingly leaves out.
 | Threat | Mitigation | Where |
 |---|---|---|
 | Forged or tampered token | HMAC-signed with `secret_key_base`, purpose-bound, 12-hour expiry; the member is looked up on every request and handshake | `server/app/services/auth_token.rb` |
-| Placeholder secret in production | Boot fails when `SECRET_KEY_BASE` is missing, under 64 characters or the `.env.example` value | `server/lib/secret_key_check.rb` |
+| Placeholder secret in production | Boot fails when `SECRET_KEY_BASE` is missing, under 40 characters or the `.env.example` value | `server/lib/secret_key_check.rb` |
 | Token in logs | `token`, `password` and `secret` parameters filtered, the socket's `?token=` included | `filter_parameter_logging.rb` |
 | Scripted sign-ins | 20 demo sign-ins a minute per client address (`SIGN_IN_LIMIT_PER_MINUTE`), then `RATE_LIMITED` | `throttle.rb`, `sign_in_as_demo.rb` |
 | Reading another workspace's data by id | Every resolver goes through `AccessPolicy`; other workspaces' records are `NOT_FOUND`, so ids cannot be probed; compare checks every version id | `access_policy.rb`, `tenant_isolation_test.rb` |

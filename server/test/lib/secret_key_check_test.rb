@@ -7,14 +7,15 @@ class SecretKeyCheckTest < ActiveSupport::TestCase
     assert_equal "SECRET_KEY_BASE is not set", SecretKeyCheck.problem(nil)
     assert_equal "SECRET_KEY_BASE is not set", SecretKeyCheck.problem("  ")
     assert_equal "SECRET_KEY_BASE is the .env.example placeholder", SecretKeyCheck.problem("replace-me")
-    assert_match "at least 64 characters", SecretKeyCheck.problem("a" * 63)
+    assert_match "at least 40 characters", SecretKeyCheck.problem("a" * 39)
     assert_raises(SecretKeyCheck::Error) { SecretKeyCheck.verify!("replace-me") }
   end
 
-  test "a secret of 64 characters or more is accepted" do
+  test "a secret of 40 characters or more is accepted" do
     secret = SecureRandom.hex(64)
 
-    assert_nil SecretKeyCheck.problem("b" * 64)
+    assert_nil SecretKeyCheck.problem("b" * 40)
+    assert_nil SecretKeyCheck.problem(SecureRandom.base64(32)) # Render generateValue shape
     assert_equal secret, SecretKeyCheck.verify!(secret)
   end
 

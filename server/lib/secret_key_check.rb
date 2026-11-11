@@ -2,7 +2,9 @@
 # token is signed with it, so a missing, short or copied placeholder value
 # would make them forgeable.
 module SecretKeyCheck
-  MIN_LENGTH = 64
+  # 40 characters accepts a 256-bit random value in base64 (44 characters), which is what
+  # Render's generateValue produces; `bin/rails secret` (128 hex characters) also passes.
+  MIN_LENGTH = 40
   # The value shipped in .env.example.
   PLACEHOLDER = "replace-me".freeze
 
