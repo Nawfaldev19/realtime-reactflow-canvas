@@ -18,12 +18,12 @@ services:
         value: 3.3.11
       - key: LOG_LEVEL
         value: info
-      # At least 64 characters. Generate: ruby -rsecurerandom -e 'puts SecureRandom.hex(64)'
+      # Render generates a random 256-bit value on first deploy; nobody has to paste a secret.
       - key: SECRET_KEY_BASE
-        sync: false
-      # The static site's URL, set after the site exists (see DEPLOY.md).
+        generateValue: true
+      # The static site's origin (no trailing slash). Change it if Render renames the site.
       - key: CORS_ALLOWED_ORIGINS
-        sync: false
+        value: https://live-canvas-web.onrender.com
 
   - type: web
     name: live-canvas-web
