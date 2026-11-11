@@ -1,0 +1,50 @@
+# Render Blueprint: one free web service (Rails API + Action Cable) and one free static site (React client).
+# Steps to use it are in DEPLOY.md. Nothing here is deployed until you connect the repo on Render.
+services:
+  - type: web
+    name: live-canvas-api
+    runtime: ruby
+    plan: free
+    rootDir: server
+    buildCommand: bundle install
+    # db:prepare creates and seeds the SQLite file on first boot. The free disk is
+    # ephemeral, so the demo data is re-seeded after every restart or redeploy.
+    startCommand: bin/rails db:prepare && bin/rails server -b 0.0.0.0 -p $PORT
+    healthCheckPath: /up
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: RUBY_VERSION
+        value: 3.3.11
+      - key: LOG_LEVEL
+        value: info
+      # At least 64 characters. Generate: ruby -rsecurerandom -e 'puts SecureRandom.hex(64)'
+      - key: SECRET_KEY_BASE
+        sync: false
+      # The static site's URL, set after the site exists (see DEPLOY.md).
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
+
+  - type: web
+    name: live-canvas-web
+    runtime: static
+    rootDir: client
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      # Build-time values: change them, then redeploy the site. Replace the host if the API name was taken.
+      - key: VITE_API_URL
+        value: https://live-canvas-api.onrender.com/graphql
+      - key: VITE_CABLE_URL
+        value: wss://live-canvas-api.onrender.com/cable
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: X-Frame-Options
+        value: DENY

@@ -1,6 +1,8 @@
 # Live Canvas
 
-A real-time collaborative diagram editor for planning maker projects: a Rails GraphQL and Action Cable API with a React, TypeScript and React Flow client.
+A real-time collaborative diagram editor for planning maker projects: a Rails GraphQL and Action Cable API with a React, TypeScript and React Flow client. Built to show how to keep several people's edits consistent without a CRDT, and a canvas that stays fast at thousands of nodes.
+
+**Live demo:** TODO: add the URL after deploying (steps in [DEPLOY.md](DEPLOY.md)). Until then, `bin/dev` runs it locally in one command.
 
 [![CI](https://github.com/Nawfaldev19/realtime-reactflow-canvas/actions/workflows/ci.yml/badge.svg)](https://github.com/Nawfaldev19/realtime-reactflow-canvas/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -38,7 +40,9 @@ bin/dev
 
 To see collaboration, open "Build a walnut side table" as **Ada Okafor** (owner at Riverside Makers) in one window and as **Ben Lindqvist** (editor) in a private window. Move a step or drag a connector in one; the other follows. **Cora Mbeki** is a viewer and gets a read-only live view. Reset the data with `cd server && bin/rails db:seed`.
 
-## Architecture
+## Key decisions and trade-offs
+
+The diagram shows where the pieces sit. The trade-offs that shaped it follow the diagram.
 
 ```mermaid
 graph LR
@@ -59,8 +63,6 @@ graph LR
 ```
 
 Every edit is an operation applied by one pure function on the client and by its Ruby port on the server. While collaborating, the server is the single writer: it orders each operation, validates the resulting document and broadcasts it in full. Clients keep a confirmed copy plus a queue of their own pending operations. More in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
-
-The key trade-offs:
 
 - **A server-ordered log, not a CRDT.** The server must authorise and validate every change anyway, so it can also order them. Clients need no clocks or tombstones. The price is per-field merging: two people typing in the same note keep the later text.
 - **The server mints session ids.** Re-sent changes are de-duplicated by member, session and change id, and a signed token resumes a session after a reconnect, so no client can acknowledge or suppress another's changes.
@@ -102,7 +104,7 @@ cd client && npm run test:e2e          # browsers in client/.pw-browsers: npx pl
 
 The ten decisions that shape the system are written up as ADRs, with every smaller choice in one table: [docs/DECISIONS.md](docs/DECISIONS.md). [docs/LESSONS.md](docs/LESSONS.md) covers what went wrong and what I would watch for next time.
 
-## Known limitations and next steps
+## What I would do next
 
 - **Zooming out over a very large diagram is slow.** About a quarter of zoom frames run over 25 ms at 500 to 2,000 nodes. Next step: a simplified drawing below a zoom threshold.
 - **Per-field merging.** Simultaneous typing in one note keeps the later text, and peers see a drag when it ends, not while it happens.
@@ -114,7 +116,7 @@ The ten decisions that shape the system are written up as ADRs, with every small
 
 ## Project status
 
-A portfolio project, feature-complete for what it sets out to show and maintained. It is not deployed; run it locally with `bin/dev`. Changes are listed in [CHANGELOG.md](CHANGELOG.md).
+A portfolio project, feature-complete for what it sets out to show and maintained. It is not deployed yet; run it locally with `bin/dev`. A free Render setup is ready in [DEPLOY.md](DEPLOY.md). Changes are listed in [CHANGELOG.md](CHANGELOG.md).
 
 ## Author
 

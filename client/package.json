@@ -2,6 +2,14 @@
   "name": "live-canvas-client",
   "private": true,
   "version": "1.1.0",
+  "description": "Live Canvas client: a real-time collaborative diagram editor built on React, TypeScript and React Flow.",
+  "author": "Nawfal Imran",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nawfaldev19/realtime-reactflow-canvas.git",
+    "directory": "client"
+  },
+  "homepage": "https://github.com/Nawfaldev19/realtime-reactflow-canvas#readme",
   "type": "module",
   "license": "MIT",
   "scripts": {
