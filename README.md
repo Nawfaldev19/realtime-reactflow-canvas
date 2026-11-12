@@ -2,7 +2,7 @@
 
 A real-time collaborative diagram editor for planning maker projects: a Rails GraphQL and Action Cable API with a React, TypeScript and React Flow client. Built to show how to keep several people's edits consistent without a CRDT, and a canvas that stays fast at thousands of nodes.
 
-**Live demo:** TODO: add the URL after deploying (steps in [DEPLOY.md](DEPLOY.md)). Until then, `bin/dev` runs it locally in one command.
+**Live demo:** [live-canvas-web.onrender.com](https://live-canvas-web.onrender.com): click **Try the demo** and pick a person, no passwords. It runs on a free tier, so the first load after a quiet spell can take about a minute while the server wakes up. Demo data resets on restart.
 
 [![CI](https://github.com/Nawfaldev19/realtime-reactflow-canvas/actions/workflows/ci.yml/badge.svg)](https://github.com/Nawfaldev19/realtime-reactflow-canvas/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
